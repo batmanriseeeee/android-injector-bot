@@ -8,7 +8,7 @@ from aiogram.types import Message, Document
 from aiogram.utils.exceptions import TelegramAPIError
 
 # CONFIGURATION
-BOT_TOKEN = "9003881525:AAHrpQ_5ReAKK-8esqlwVp9_k3-vGmaZC2g"
+BOT_TOKEN = "9003881525:AAEkuEBsNqNDrMiO11aUNTwuv-4DvD0yZ-E"
 JKS_PATH = "/app/my-release-key.jks"
 JKS_PASSWORD = "YOUR_JKS_PASSWORD_HERE" # The one you set in Step 1.3
 ALIAS = "my-alias"
