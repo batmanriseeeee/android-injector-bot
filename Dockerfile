@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 
 # Copy Apktool JAR
 COPY apktool.jar /usr/local/bin/apktool.jar
-RUN echo '#!/bin/bash\njava -jar /usr/local/bin/apktool.jar "$@"' > /usr/local/bin/apktool && chmod +x /usr/local/bin/apktool
+RUN echo '#!/bin/bash\njava -jar /usr/local/bin/apktool_3.0.3.jar "$@"' > /usr/local/bin/apktool && chmod +x /usr/local/bin/apktool
 
 # Copy your Keystore
 COPY my-release-key.jks /app/my-release-key.jks
