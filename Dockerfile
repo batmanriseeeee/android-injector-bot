@@ -1,21 +1,22 @@
-# Use Python 3.11 slim image
 FROM python:3.11-slim
 
-# Update system and install dependencies
+# Install Java
 RUN apt-get update && apt-get install -y \
-    default-jre \
-    default-jdk \
-    zipalign \
+    default-jre-headless \
     curl \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy Apktool JAR
-COPY apktool.jar /usr/local/bin/apktool.jar
-RUN echo '#!/bin/bash\njava -jar /usr/local/bin/apktool_3.0.3.jar "$@"' > /usr/local/bin/apktool && chmod +x /usr/local/bin/apktool
+# Create APKTool directory
+RUN mkdir -p /opt/apktool
 
-# Copy your Keystore
-COPY my-release-key.jks /app/my-release-key.jks
+# Copy APKTool JAR
+COPY apktool/apktool_3.0.3.jar /opt/apktool/apktool.jar
+
+# Create APKTool launcher
+RUN printf '#!/bin/sh\nexec java -jar /opt/apktool/apktool.jar "$@"\n' \
+    > /usr/local/bin/apktool && \
+    chmod +x /usr/local/bin/apktool
 
 # Working directory
 WORKDIR /app
@@ -24,11 +25,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy Bot Code
+# Copy Python application
 COPY main.py .
 
-# Expose port (optional, but good practice)
-EXPOSE 8080
-
-# Command to run the bot
+# Start application
 CMD ["python", "main.py"]
